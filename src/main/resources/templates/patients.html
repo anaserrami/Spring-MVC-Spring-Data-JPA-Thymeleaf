@@ -7,9 +7,14 @@
 </head>
 <body>
     <div class="p-5">
-        <div>
+        <div class="card">
             <div class="card-header">Liste Patients</div>
             <div class="card-body">
+                <form method="get" th:action="@{index}" >
+                        <label>Keyword : </label>
+                        <input type="text" name="keyword" th:value="${keyword}">
+                        <button type="submit" class="btn btn-primary mt-2">Search</button>
+                </form>
                 <table class="table" style="border: black">
                     <thead>
                     <tr>
@@ -18,6 +23,7 @@
                         <th>Date de naissance</th>
                         <th>Malade</th>
                         <th>Score</th>
+                        <th>Actions</th>
                     </tr>
                     <tr th:each="p:${listPatients}">
                         <td th:text="${p.id}"></td>
@@ -25,10 +31,20 @@
                         <td th:text="${p.dateNaissance}"></td>
                         <td th:text="${p.malade}"></td>
                         <td th:text="${p.score}"></td>
+                        <td>
+                            <a th:href="@{/edit(id=${p.id})}" class="btn btn-warning">Edit</a>
+                            <a th:href="@{/delete(id=${p.id})}" class="btn btn-danger">Delete</a>
+                        </td>
                     </tr>
                     </thead>
-                    <tbody></tbody>
                 </table>
+                <ul class="nav nav-pills">
+                    <li th:each="value, item:${pages}">
+                        <a th:href="@{/index(page=${item.index}, keyword=${keyword})}"
+                           th:class="${(currentPage==item.index) ? 'btn btn-info ms-2' : 'btn btn-outline-info ms-2'}"
+                           th:text="${item.index}"></a>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
