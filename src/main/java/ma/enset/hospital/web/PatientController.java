@@ -29,4 +29,26 @@ public class PatientController {
         model.addAttribute("keyword", kw);
         return "patients";
     }
+    @GetMapping("/")
+    public String home(){
+        return "redirect:/index";
+    }
+    @GetMapping("/delete")
+    public String delete(Long id, String keyword, int page){
+        patientRepository.deleteById(id);
+        return "redirect:/index?page="+page+"&keyword="+keyword;
+    }
+    @GetMapping("/form")
+    public String formPatient(Model model){
+        model.addAttribute("patient", new Patient());
+        model.addAttribute("mode", "new");
+        return "formPatient";
+    }
+    @GetMapping("/edit")
+    public String editPatient(Model model, Long id){
+        Patient patient = patientRepository.findById(id).get();
+        model.addAttribute("patient", patient);
+        model.addAttribute("mode", "edit");
+        return "formPatient";
+    }
 }

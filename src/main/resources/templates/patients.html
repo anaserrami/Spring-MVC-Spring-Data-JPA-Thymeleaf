@@ -4,16 +4,20 @@
     <meta charset="UTF-8">
     <title>Patients</title>
     <link rel="stylesheet" href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.css">
+    <script src="/webjars/jquery/3.6.4/jquery.min.js"></script>
 </head>
 <body>
     <div class="p-5">
         <div class="card">
             <div class="card-header">Liste Patients</div>
             <div class="card-body">
-                <form method="get" th:action="@{index}" >
-                        <label>Keyword : </label>
-                        <input type="text" name="keyword" th:value="${keyword}">
-                        <button type="submit" class="btn btn-primary mt-2">Search</button>
+                <form method="get" th:action="@{index}">
+                    <label>Keyword : </label>
+                    <input type="text" name="keyword" th:value="${keyword}">
+                    <button type="submit" class="btn btn-primary mt-2">
+                        <i class="bi bi-search"></i>
+                    </button>
                 </form>
                 <table class="table" style="border: black">
                     <thead>
@@ -32,8 +36,14 @@
                         <td th:text="${p.malade}"></td>
                         <td th:text="${p.score}"></td>
                         <td>
-                            <a th:href="@{/edit(id=${p.id})}" class="btn btn-warning">Edit</a>
-                            <a th:href="@{/delete(id=${p.id})}" class="btn btn-danger">Delete</a>
+                            <a th:href="@{edit(id=${p.id})}" class="btn btn-warning ms-2">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <a onclick="return confirm('Are you sure ?')"
+                               th:href="@{delete(id=${p.id}, keyword=${keyword}, page=${currentPage})}"
+                               class="btn btn-danger">
+                                <i class="bi bi-trash"></i>
+                            </a>
                         </td>
                     </tr>
                     </thead>
@@ -42,7 +52,7 @@
                     <li th:each="value, item:${pages}">
                         <a th:href="@{/index(page=${item.index}, keyword=${keyword})}"
                            th:class="${(currentPage==item.index) ? 'btn btn-info ms-2' : 'btn btn-outline-info ms-2'}"
-                           th:text="${item.index}"></a>
+                           th:text="${1+item.index}"></a>
                     </li>
                 </ul>
             </div>
