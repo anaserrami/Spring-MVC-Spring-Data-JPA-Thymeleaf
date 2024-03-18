@@ -1,5 +1,6 @@
 package ma.enset.hospital.web;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import ma.enset.hospital.entities.Patient;
 import ma.enset.hospital.repository.PatientRepository;
@@ -7,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -51,16 +53,21 @@ public class PatientController {
     }
 
     @PostMapping(path = "/save")
-    public String save(Model model, Patient patient){
+    public String save(Model model, @Valid Patient patient, BindingResult bindingResult,
+                       @RequestParam(defaultValue = "") String keyword,
+                       @RequestParam(defaultValue = "0") int page){
+        if(bindingResult.hasErrors()) return "formPatients";
         patientRepository.save(patient);
-        return "formPatients";
+        return "redirect:/index?page="+page+"&keyword="+keyword;
     }
 
-    @GetMapping("/edit")
-    public String editPatient(Model model, Long id){
-        Patient patient = patientRepository.findById(id).get();
+    @GetMapping( "/editPatient")
+    public String editPatient(Model model, Long id, String keyword, int page){
+        Patient patient = patientRepository.findById(id).orElse(null);
+        if (patient == null) throw new RuntimeException("Patient not found");
         model.addAttribute("patient", patient);
-        model.addAttribute("mode", "edit");
-        return "formPatients";
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("page", page);
+        return "editPatient";
     }
 }

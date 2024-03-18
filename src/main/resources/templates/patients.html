@@ -39,7 +39,8 @@
                         <td th:text="${p.malade}"></td>
                         <td th:text="${p.score}"></td>
                         <td>
-                            <a th:href="@{edit(id=${p.id})}" class="btn btn-warning ms-2">
+                            <a th:href="@{editPatient(id=${p.id}, keyword=${keyword}, page=${currentPage})}"
+                               class="btn btn-warning ms-2">
                                 <i class="bi bi-pencil"></i>
                             </a>
                             <a onclick="return confirm('Are you sure ?')"

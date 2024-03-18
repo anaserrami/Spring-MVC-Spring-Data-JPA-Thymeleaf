@@ -4,7 +4,7 @@
       layout:decorate="template1">
 <head>
     <meta charset="UTF-8">
-    <title>Form Patients</title>
+    <title>Edit Patient</title>
     <link rel="stylesheet" href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.css">
     <script src="/webjars/jquery/3.6.4/jquery.min.js"></script>
@@ -13,7 +13,6 @@
             margin-bottom: 1rem;
         }
         .form-group label {
-            display: block;
             margin-bottom: 0.5rem;
         }
         .form-group input {
@@ -51,9 +50,14 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 offset-md-3">
-                <h1 class="mb-3 text-center">New Patient</h1>
+                <h1 class="mb-3 text-center">Edit Patient</h1>
                 <div class="form-container">
-                    <form method="post" th:action="@{save}">
+                    <form method="post" th:action="@{save(page=${page}, keyword=${keyword})}">
+                        <div class="form-group">
+                            <label>ID : </label>
+                            <label th:text="${patient.id}"></label>
+                            <input class="form-control" type="hidden" name="id" th:value="${patient.id}">
+                        </div>
                         <div class="form-group required">
                             <label for="nom">Nom : </label>
                             <input id="nom" class="form-control" type="text" name="nom" th:value="${patient.nom}" required>
@@ -66,10 +70,7 @@
                         </div>
                         <div class="form-group">
                             <label for="malade">Malade : </label>
-                            <div class="form-check">
-                                <input id="malade" type="checkbox" name="malade" th:checked="${patient.malade}" class="form-check-input">
-                                <label for="malade" class="form-check-label">Yes</label>
-                            </div>
+                            <input id="malade" type="checkbox" name="malade" th:checked="${patient.malade}">
                             <span class="text-danger" th:errors="${patient.malade}"></span>
                         </div>
                         <div class="form-group required">
@@ -78,12 +79,12 @@
                             <span class="text-danger" th:errors="${patient.score}"></span>
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="submit" class="btn btn-primary mt-3">Edit</button>
                         </div>
                     </form>
                 </div>
             </div>
-        </div>
+         </div>
     </div>
 </div>
 </body>
