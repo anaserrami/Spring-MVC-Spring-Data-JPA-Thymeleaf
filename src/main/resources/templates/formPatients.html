@@ -11,8 +11,8 @@
 </head>
 <body>
     <div layout:fragment="content1">
-        <div class="col-md-6 offset-3">
-            <form th:method="post" th:action="@{save}" class="p-5">
+        <div class="col-md-6 offset-3 p-5">
+            <form method="post" th:action="@{save}">
                 <div>
                     <label for="nom">Nom : </label>
                     <input id="nom" class="form-control" type="text" name="nom" th:value="${patient.nom}">
@@ -34,7 +34,7 @@
                     <span th:errors="${patient.score}"></span>
                 </div>
                 <div>
-                    <button type="submit" class="btn btn-primary mt-2">Save</button>
+                    <button type="submit" class="btn btn-primary mt-3">Save</button>
                 </div>
             </form>
         </div>
