@@ -26,7 +26,7 @@
             <div class="card-header fs-4"><b>Liste Patients</b></div>
             <div class="card-body">
                 <div class="searchArea">
-                    <form method="get" th:action="@{index}">
+                    <form method="get" th:action="@{/user/index}">
                         <div class="input-button-container">
                             <input placeholder="Search" type="text" class="form-control" name="keyword" th:value="${keyword}">
                             <button type="submit" class="btn btn-primary">
@@ -43,7 +43,7 @@
                         <th class="text-center">Date de naissance</th>
                         <th class="text-center">Malade</th>
                         <th class="text-center">Score</th>
-                        <th class="text-center">Actions</th>
+                        <th class="text-center" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">Actions</th>
                     </tr>
                     <tr th:each="p:${listPatients}">
                         <td class="text-center" th:text="${p.id}"></td>
@@ -51,13 +51,13 @@
                         <td class="text-center" th:text="${p.dateNaissance}"></td>
                         <td class="text-center" th:text="${p.malade}"></td>
                         <td class="text-center" th:text="${p.score}"></td>
-                        <td class="text-center">
-                            <a th:href="@{editPatient(id=${p.id}, keyword=${keyword}, page=${currentPage})}"
+                        <td class="text-center" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+                            <a th:href="@{/admin/editPatient(id=${p.id}, keyword=${keyword}, page=${currentPage})}"
                                class="btn btn-warning ms-2">
                                 <i class="bi bi-pencil"></i>
                             </a>
                             <a onclick="return confirm('Are you sure ?')"
-                               th:href="@{delete(id=${p.id}, keyword=${keyword}, page=${currentPage})}"
+                               th:href="@{/admin/delete(id=${p.id}, keyword=${keyword}, page=${currentPage})}"
                                class="btn btn-danger">
                                 <i class="bi bi-trash"></i>
                             </a>
@@ -68,7 +68,7 @@
 
                     <ul class="nav nav-pills d-flex justify-content-center flex-wrap gap-1">
                         <li th:each="value, item:${pages}">
-                            <a th:href="@{/index(page=${item.index}, keyword=${keyword})}"
+                            <a th:href="@{/user/index(page=${item.index}, keyword=${keyword})}"
                                th:class="${(currentPage==item.index) ? 'btn btn-primary ms-2' : 'btn btn-outline-primary ms-2'}"
                                th:text="${1+item.index}"></a>
                         </li>
