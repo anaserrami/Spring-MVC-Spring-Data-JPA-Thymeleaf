@@ -147,7 +147,6 @@ Code html (patient.html) pour toutes les tâches de cette partie 1 :
                     </tr>
                     </thead>
                 </table>
-
                 <ul class="nav nav-pills d-flex justify-content-center flex-wrap gap-1">
                     <li th:each="value, item:${pages}">
                         <a th:href="@{/user/index(page=${item.index}, keyword=${keyword})}"
@@ -155,8 +154,6 @@ Code html (patient.html) pour toutes les tâches de cette partie 1 :
                            th:text="${1+item.index}"></a>
                     </li>
                 </ul>
-
-
             </div>
         </div>
     </div>
