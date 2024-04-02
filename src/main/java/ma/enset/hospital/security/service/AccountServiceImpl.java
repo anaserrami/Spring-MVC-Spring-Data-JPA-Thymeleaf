@@ -31,7 +31,6 @@ public class AccountServiceImpl implements AccountService{
                 .build();
         return appUserRepository.save(appUser);
     }
-
     @Override
     public AppRole addNewRole(String role) {
         AppRole appRole = appRoleRepository.findById(role).orElse(null);
@@ -39,7 +38,6 @@ public class AccountServiceImpl implements AccountService{
         appRole = AppRole.builder().role(role).build();
         return appRoleRepository.save(appRole);
     }
-
     @Override
     public void addRoleToUser(String username, String role) {
         AppUser appUser = appUserRepository.findByUsername(username);
@@ -47,14 +45,12 @@ public class AccountServiceImpl implements AccountService{
         appUser.getRoles().add(appRole);
         //appUserRepository.save(appUser);
     }
-
     @Override
     public void removeRoleFromUser(String username, String role) {
         AppUser appUser = appUserRepository.findByUsername(username);
         AppRole appRole = appRoleRepository.findById(role).get();
         appUser.getRoles().remove(appRole);
     }
-
     @Override
     public AppUser loadUserByUsername(String username) {
         return appUserRepository.findByUsername(username);
